@@ -46,8 +46,8 @@ css不能正常加载时，仍然能够保证基本的文档结构
 1.7 三栏布局方式两边固定中间自适应怎么实现
 margin负值法：两边固定宽度的元素使用float浮动，中间元素设置width: 100%，通过左右栏的负margin值让中间元素自适应剩余空间。
 自身浮动法：左栏左浮动，右栏右浮动，中间栏放在最后，不设置浮动属性，它会自动填充剩余空间。
-绝对定位法：左右栏使用position:absolute固定在页面两侧，中间栏通过设置margin-left和margin-right来自适应布局。
-flex布局：使用display:flex，左右两栏设置固定宽度，中间栏设置flex: 1，让它自动填充剩余空间。
+绝对定位法：左右栏使用position: absolute固定在页面两侧，中间栏通过设置margin-left和margin-right来自适应布局。
+flex布局：使用display: flex，左右两栏设置固定宽度，中间栏设置flex: 1，让它自动填充剩余空间。
 
 1.8 页面导入样式时，使用link和@import有什么区别
 link属于html标签，而@import是css提供的
@@ -75,8 +75,8 @@ src会把资源下载下来，代替当前的元素，然后嵌入到文档中
 
 2. CSS
 2.1 盒子模型
-标准盒子模型:margin、border、padding、content			box-sizing: content-box;
-IE盒子模型:margin、content(border + padding + content)		box-sizing: border-box;
+标准盒子模型：margin、border、padding、content			box-sizing: content-box;
+IE盒子模型：margin、content(border + padding + content)		box-sizing: border-box;
 
 2.2 重绘和重排(回流)
 重绘：对DOM的样式进行修改，比如color和background-color，浏览器不需要重新计算几何属性，直接绘制了该元素的新样式，那么这里就只触发了重绘。
@@ -114,7 +114,7 @@ overflow属性为hidden、auto、scroll
 给父元素添加一个伪元素	.clearfix::after { content: ''; clear: both; display: table; }
 
 2.8 隐藏元素的方法
-display:none;(不占位)	 visibility:hidden; (占位) 	opacity: 0; (占位)  position 移到外部，z-index 
+display: none;(不占位)	 visibility: hidden; (占位) 	opacity: 0; (占位)  position 移到外部，z-index 
 
 3. JS
 3.1 JS数据类型
@@ -163,7 +163,7 @@ var、let声明的变量可以重新赋值，const不可以
 var可以多次声明同一个变量，let、const不可以
 
 3.9 深拷贝
-扩展运算符。缺点:这个方法只能实现第一层，当有多层的时候还是浅拷贝
+扩展运算符。缺点：这个方法只能实现第一层，当有多层的时候还是浅拷贝
 JSON.parse(JSON.stringify(object))
 利用递归函数实现
 
