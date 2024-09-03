@@ -1,0 +1,314 @@
+1. HTML
+1.1	简述一下http和https
+http是超文本传输协议，信息是明文传输，https加了SSL协议，更安全
+https协议需要ca申请证书，一般免费证书较少，因而需要一定费用
+http和https使用的是完全不同的连接方式，用的端口也不一样，前者是830，后者是443
+https协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协办议，比http协议安全
+
+1.2 一个完整的http请求都发生了些什么事情?
+DNS解析:将域名解析成IP地址
+TCP连接:TCP三次握手
+发送HTTP请求
+服务器处理请求并返回HTTP报文
+浏览器解析渲染页面
+断开连接:TCP四次挥手
+
+1.3 TCP三次握手和TCP四次挥手
+当建立协议的时候，TCP进行了3次握手
+。客户端请求连接服务器
+。服务器响应成功
+。客户端回应服务器准备开始连接
+当终止协议的时候，TCP进行了4次挥手
+。客户端向服务器发送，断开请求
+。服务器向客户端发送，还有数据没有传输完毕，请稍等
+。服务器向客户端发送，传输完毕，可以随时断开请求了
+。客户端向服务器发送，你断开请求吧，不用回复了。然后各自断开请求
+
+1.4 HTML5增加了哪些属性和标签，还有哪些api
+新增语义化标签:header、footer、nav、article、section、asicde
+新增表单属性:min、max、step、placeholder、autofocus、required， pattern， multiple.
+新增音频视频
+画布canvas
+数据存储localstorage sessionstorage
+
+1.5 对HTML语义化标签的理解
+用合适的标签和属性组合文档结构
+结构清晰，增强代码可读性
+css不能正常加载时，仍然能够保证基本的文档结构
+有利于后期维护
+有利于团队合作
+有利于SEO
+有利于用户体验
+
+1.6 常见布局方式
+固定布局、自适应布局、响应式布局、弹性布局、流式布局
+
+ 
+1.7 三栏布局方式两边固定中间自适应怎么实现
+margin 负值法：两边固定宽度的元素使用 float 浮动，中间元素设置 width: 100%，通过左右栏的负 margin 值让中间元素自适应剩余空间。
+自身浮动法：左栏左浮动，右栏右浮动，中间栏放在最后，不设置浮动属性，它会自动填充剩余空间。
+绝对定位法：左右栏使用 position: absolute 固定在页面两侧，中间栏通过设置 margin-left 和 margin-right 来自适应布局。
+Flexbox 布局：使用 display: flex，左右两栏设置固定宽度，中间栏设置 flex: 1，让它自动填充剩余空间。
+
+1.8 页面导入样式时，使用link和@import有什么区别
+link 属于 html 标签，而@import 是 css 提供的
+页面被加载时，link 会同时被加载，而@import 引用的 css 会等到页面加载结束后加载
+link 是 html 标签，因此没有兼容性，而@import 只有 IE5 以上才能识别
+link 方式样式的权重高于@import 的
+
+1.9 title与h1的区别，b与strong的区别，i与em的
+title概括了网站信息，可以告诉搜索引擎或者用户关于这个网站的内容主题是什么
+h1文章主体内容，告诉网络爬虫网站内容最主要是什么
+title显示在网页标题上，h1显示在网页内容上
+对SEO来说，title比h1更重要
+网站的1ogo都是用h1标签包裹的
+b标签只有加粗的样式，没有实际含义，strong表示标签内字符比较重要，用以强调
+i只是一个倾斜标签，没有实际含义，em表示标签内字符比较重要，用以强调
+
+1.10 img标签的title和alt有什么区别
+title:鼠标移入到图片显示的值
+alt:图片无法加载时显示的值
+在SEO的层面上，蜘蛛抓取不到图片的内容，为了增加SEO效果，要加入alt属性来描述这张图是什么或关键词
+
+1.11 href和src的区别
+href是超链接，会建立通道，让当前元素或当前文档和引用资源进行联系，需要引用资源的时候，就会通过通道进行引用
+src会把资源下载下来，代替当前的元素，然后嵌入到文档中
+
+2. CSS
+2.1 盒子模型
+标准盒子模型:margin、border、padding、content				box-sizing: content-box;
+IE盒子模型:margin、content(border + padding + content)		box-sizing: border-box;
+
+2.2 重绘和重排(回流)
+重绘：对DOM的样式进行修改，比如color和background-color，浏览器不需要重新计算几何属性，直接绘制了该元素的新样式，那么这里就只触发了重绘。
+重排：当一个元素自身的宽高，位置，显隐，或元素内部的文字结构发生变化，导致需要重新构建页面，这个过程就是重排(也叫回流)。
+产生回流一定会造成重绘，但是重绘不一定会造成回流。
+
+2.3 CSS 选择器有优先级
+!important > 内联样式(行间样式) > id选择器 > 类选择器 > 标签选择器 > 通配(*)
+
+ 
+2.4 实现元素的垂直居中
+定位+transform		position: absolute;left: 50%;top: 50%;transform: translate(-50%， -50%);
+定位+margin			position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;
+flex布局			display: flex; align-items: center; justify-content: center;
+
+2.5 什么是 BFC
+BFC 也就是块格式化上下文， 是一个独立的容器，容器里的子元素不会影响到外面的元素。
+触发BFC：
+float 属性为 left 或 right
+position 属性为 absolute 或 fixed
+display 属性为 inline-block、table-cell、table-caption
+overflow 属性为 hidden、auto、scroll
+display属性为flex 、grid
+
+2.6 清除浮动有哪些方式(浮动塌陷)
+元素浮动以后，脱离正常文档流，导致父元素无法被撑开(高度易陷)，且会影响后续正常布局。
+清浮动方法：
+给浮动标签的父标签固定高度(不够灵活)
+触发BFC
+给浮动元素的父元素添加一个伪元素	.clearfix::after { content: ''; clear: both; display: table; }
+
+2.7 margin塌陷
+在两个盒子嵌套的时候，父盒子和子盒子同时设置margin的时候会出现实际的magin取的是两个margin的最大值。
+解决方法：
+给父级设置边框或内边距
+触发BFC
+给父元素添加一个伪元素	.clearfix::after { content: ''; clear: both; display: table; }
+
+2.8 隐藏元素的方法
+	display:none;(不占位)	 visibility:hidden; (占位) 	opacity: 0; (占位)  position 移到外部，z-index 
+
+3. JS
+3.1 JS数据类型
+基本类型：String、Number、Boolean、Undefined、Null、Symbol
+引用类型：Object、Function、Array
+判断方式：
+typeof()		对于基本数据类型没问题，遇到引用数据类型就不管用	console.log(typeof [1，2，3] )//object
+instanceof()	只能判断引用数据类型，不能判断基本数据类型		console.log('abc'instanceof String)//false
+constructor 	几乎可以判断基本数据类型和引用数据类型	 console.log(('abc').constructor=== String)//object
+Object.prototype.toString.call()
+
+3.2 闭包
+函数嵌套函数，内部函数被外部函数返回并保存下来时，就会产生闭包。
+特点：可以重复利用变量，并且这个变量一直保存在内存中，不会被垃圾回收机制回收，不会污染全局
+缺点：闭包较多的时候，会消耗内存，导致页面的性能下降，在IE浏览器中才会导致内存泄漏
+使用场景：防抖，节流，函数嵌套函数避免全局污染的时候
+解决办法：把调用内部函数对象的变量设置为null
+	function fn(a){return function(){console.log(a)}}	var fo = fn('abcd')	fo()
+ 
+3.3内存泄漏
+内存泄露是指网页或应用程序由于某些原因未能及时释放不再需要的内存，从而导致内存使用不断增加，影响性能和用户体验。
+常见原因：
+	一些未清除的定时器；过度的闭包；一些未声明直接赋值的变量
+
+3.4 什么是作用域，什么是作用域链？
+作用域：在JS中变量和函数的可访问区域。
+作用域链：每个作用域都有一个链，沿着这个链向上查找变量，从当前作用域开始，逐级查找父作用域，直到全局作用域或找到变量为止。
+
+3.5 什么是原型，什么是原型链？
+	原型：每个JS对象都有一个原型对象，原型对象的属性和方法可以被该对象继承。
+	原型链：原型链是由对象的原型构成的链式结构，查找属性时会沿着原型链向上查找，直到找到或到达链的末尾。
+
+3.6 数组去重方法
+使用 Set：const uniqueArray = [...new Set(array)];
+使用 Array.from 与 Set：const uniqueArray = Array.from(new Set(array));
+使用 filter 和 indexOf：const uniqueArray = array.filter((item， index) => array.indexOf(item) === index);	
+
+3.7 对象合并方法
+	const merged = Object.assign({}， obj1， obj2);
+	使用扩展运算符：const merged = { ...obj1， ...obj2 };
+
+3.8 var、let、const
+var声明的变量不存在块级作用域，在全局范围内都有效，let、const声明的变量有块级作用域，只在它所在的代码块有效
+var声明的变量存在变量提升，let、const不存在
+var、let声明的变量可以重新赋值，const不可以
+var可以多次声明同一个变量;let、const不可以
+
+3.9 深拷贝
+扩展运算符。缺点:这个方法只能实现第一层，当有多层的时候还是浅拷贝
+JSON.parse (JSON.stringify(object))
+利用递归函数实现
+
+3.10 localStorage、sessionStorage、cookie
+都是浏览器用于存储数据的机制
+localStorage：用于在客户端永久存储数据，数据在浏览器关闭后依然存在
+sessionStorage：存储数据在浏览器关闭后会被清除
+cookie：用于存储少量数据(最大4KB)，数据可以设置过期时间，通常用于认证信息等
+
+3.11 call、apply、bind
+都用于改变函数的this指向
+call、apply都是立即执行，bind返回的是一个函数，需要被调用才能执行
+call、bind接受参数列表，而apply接受参数数组
+
+3.12 get和post的区别
+get一般是获取数据，post一般是提交数据
+get参数会放在url上，所以安全性比较差，post是放在body中
+get请求时会被缓存，post请求不会被缓存；get的url有长度限制，post理论上不受限制
+3.13 箭头函数与普通函数的区别
+普通函数是谁调用这个函数，this指向谁；箭头函数是在哪里定义函数，this指向谁，而且this不可修改
+箭头函数不能new
+箭头函数没有prototype
+箭头函数没有arguments
+
+3.14事件代理(事件委托)
+利用事件冒泡机制来实现，将子元素的事件绑定到了父元素的身上。当子元素触发事件时，会冒泡到父元素，由父元素处理事件。提高了性能，并且适用于动态添加的子元素。
+
+3.15 防抖和节流
+都是应对页面中频繁触发事件的优化方案
+防抖:避免事件重新触发(多米诺骨牌被推倒后，要从第一个开始摆)，若中间穿插了其他事情，则重新开始。典型场景:搜索框搜索输入
+节流:连续触发事件但是在设定的一段时间内只执行一次函数。典型场景:高频事件快速点击、鼠标滑动、scroll事件
+
+3.16图片懒加载
+优先加载可视区域的内容，其他部分等进入了可视区域再加载，从而提高性能，减轻服务器压力。
+原理：在图片没有进入可视区域时，先不给<img>的src赋值，这样浏览器就不会发送请求了，等到图片进入可视区域再给src赋值
+
+3.17怎么解决异步回调地狱
+	使用Promise：通过.then()链式调用异步操作，每个异步任务完成后传递结果给下一个任务。
+	使用async/await(Promise的语法糖)：使用await等待每个异步操作完成，代码更加直观和可读。
+
+3.18 JS中的常用的继承方式
+原型链继承、借用构造函数继承、组合式继承、ES6的class类继承
+
+3.19 class和普通构造函数的区别
+class是ES6引入的语法糖，用于简化类的定义和继承，让我们可以直接在类内部定义方法，这些方法默认不可枚举。而普通构造函数需要手动在prototype上定义方法，这些方法默认是可枚举的。
+
+3.20服务端渲染和客户端渲染的区别
+服务端渲染：在服务器上生成完整的HTML页面并发送到客户端，浏览器直接展示内容。首屏加载快，适合SEO，但每次请求都需要重新加载页面
+客户端渲染：初始页面是一个空的HTML，JS在浏览器中运行后动态生成内容。页面交互更流畅，适合单页应用（SPA），但首屏加载较慢，依赖于浏览器执行JS
+
+3.21宏任务和微任务都有哪些
+宏任务：<script>、setTimeout、setInterval
+微任务：promise.then、process.nextTick
+当前宏任务完成后，所有微任务会被执行，然后才会开始下一个宏任务。
+
+3.22延迟JS加载的方式
+	<script defer src="script.js"></script>
+	<script async src="script.js"></script>
+ 
+4. VUE
+4.1 MVVM和MVC
+MVC
+Model:负责数据和业务逻辑。
+View:显示数据，不包含逻辑。
+Controller:处理用户输入，更新Model和View。
+MVVM
+Model:同MVC，管理数据和业务逻辑。
+View:通过数据绑定与ViewModel交互。
+ViewModel:作为Model和View之间的桥梁，包含数据和命令，不直接操作DOM。
+主要区别:
+控制器vs视图模型:MVC通过Controller处理用户输入和更新数据，MVVM通过ViewModel处理这些逻辑。
+数据绑定:MVC中的数据同步需要手动处理，而MVVM通过数据绑定自动完成。
+MVVM更适合数据驱动的应用，更容易进行单元测试。而MVC更适合需要更多控制的应用
+
+4.2 MVVM框架和jQuery框架有什么区别
+MVVM更擅长数据的增删改查，jQuery更擅长的是DOM节点操作、动画效果
+数据绑定：MVVM框架自动处理数据与视图的同步，而jQuery需需要手动更新DOM。
+编程范式：MVVM框架倾向于声明式编程，而jQuery更侧重命令式编程。
+复杂度：MVVM框架更适合构建大型、复杂的单页应用(SPA)，而jQuery更适合简单的页面交互和快速原型开发。
+
+4.3 Vue的双向绑定原理
+通过Object.defineProperty劫持数据发生的改变，如果数据发生改变了，触发update方法进行更新节点内容，从而实现了数据双向绑定。
+
+4.4 Vue优缺点
+Vue的两个核心系统：数据驱动、组件系统
+优点：MVVM、数据驱动、组件化、轻量、简洁、高效、快速、模块友好。
+缺点：1.不支持低版本的浏览器，最低只支持到IE9；2.不利于SEO优化；3.第一次加载首页耗时相对较长
+
+4.5 SPA单页面应用和传统页面跳转有什么区别？
+	单页面应用：一个系统只加载一次资源，之后的操作交互、数据交互是通过路由、ajax来进行，页面并没有刷新
+SPA跳转是一个页面进行切换，传统页面跳转就是跳转不同的html 
+SPA对于SEO不是特别好，只能收录一个，传统的页面对于SEO比较好，多个html文件收录
+
+4.6 Vue的生命周期
+	beforeCreate、created、beforeMount、mounted、beforeUpdate、updated、beforeDestroy、destroyed
+	一旦进入到页面或组件，会执行beforeCreate、created、beforeMount、mounted
+父组件引入子组件，那么生命周期执行的顺序是父：beforeCreate、created、beforeMount，子：beforeCreate、created、beforeMount、mount、mounteed，父：mounted
+如果加入了keep-alive(缓存组件)会多两个生命周期 activated、deactivated，第一次进入组件会执行beforeCreate、created、beforeMount、mounted、activated，第二次或第N次进入组件会执行activated
+
+4.7 导航守卫有哪些
+	全局守卫：beforeEach、beforeResolve、afterEach
+	路由独享守卫：beforeEnter
+	组件内守卫：beforeRouteEnter、beforeRouteUpdate、beforeRouteLeave
+ 
+4.8 组件传值
+	父传子：父组件通过 props 向子组件传递数据
+子传父：子组件通过 $emit 方法向父组件发送事件。子组件触发事件时，可以附带数据，父组件通过监听事件来获取数据
+组件之间：vuex、eventbus、本地存储
+
+4.9 Vue-router的模式
+hash模式：带 # ，hash虽然出现在URL中，但不会被包含在HTTP请求中，对后端完全没有影响，因此即使没有做到对路由的全覆盖，也不会返回404错误
+history模式：一旦刷新的话，有可能会404，因为没有当前的真正路径，要想解决这一问题需要后端配合，将不存在的路径重定向到入口文件
+
+4.10 v-if和v-for的优先级
+v-for的优先级要比v-if的优先级高
+v-if和v-for不要写在同一个节点上，v-if要写在父节点上
+
+4.11 Vue检测不到数组的改变怎么解决
+vm.arr.splice(index， 1， newValue)
+vm.$set(vm.arr， index， newValue)
+Vue.set(vm.arr， index， newValue)
+
+4.12 computed， watch，methods
+computed：计算属性，可以监听某些数据的变化，并且有缓存。只有监听的数据发生变化才会重新进行计算。如果一进入页面调用，就会触发
+methods：可以放入函数，没有缓存。如果一进入页面调用，就会触发
+watch：监听属性，当数据发生改变时，才会触发。可以得到现在的值和过去的值
+
+4.13 vue.$nextTick()
+当DOM更新完毕执行内部代码
+
+4.14 props和data优先级
+props > methods > data > computed > watch
+
+4.15 Vuex
+Vuex 是 Vue.js 的官方状态管理库，用于集中管理应用的所有状态。
+核心组成部分包括：
+State：存储应用的状态数据，所有组件共享
+Getters：从 state 中派生出一些计算结果，类似于计算属性
+Mutations：同步更改 state 的方法，每个 mutation 都有一个事件类型和回调函数
+Actions：可以包含异步操作，用来提交 mutations，以便修改 state
+Modules：允许将 store 分割成多个模块，每个模块有自己的 state、mutations、actions 和 getters，适用于大型应用的状态管理
+Vuex里的数据是保存在运行内存中的,当页面刷新时,页面会重新加载Vue实例,Vuex里面的数据就会被重新赋值。为实现持久化存储，可搭配localStorage或cookies使用；或使用vuex-persistedstate插件
+
+4.16 什么是虚拟DOM
+虚拟DOM就是一个在内存里的轻量版DOM。当我们更新UI时，框架会先在这个虚拟DOM上进行操作，然后只把必要的变化应用到真实DOM上。这种方式可以让页面更新更快，性能更好。
