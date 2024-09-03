@@ -281,7 +281,7 @@ hash模式：带 # ，hash虽然出现在URL中，但不会被包含在HTTP请�
 history模式：一旦刷新的话，有可能会404，因为没有当前的真正路径，要想解决这一问题需要后端配合，将不存在的路径重定向到入口文件
 
 4.10 v-if和v-for的优先级
-v-for的优先级要比v-if的优先级高
+Vue2中： v-for的优先级比v-if高，Vue3中： v-if的优先级比v-for高
 v-if和v-for不要写在同一个节点上，v-if要写在父节点上
 
 4.11 Vue检测不到数组的改变怎么解决
@@ -312,3 +312,55 @@ Vuex里的数据是保存在运行内存中的,当页面刷新时,页面会重�
 
 4.16 什么是虚拟DOM
 虚拟DOM就是一个在内存里的轻量版DOM。当我们更新UI时，框架会先在这个虚拟DOM上进行操作，然后只把必要的变化应用到真实DOM上。这种方式可以让页面更新更快，性能更好。
+ 
+5. VUE 3
+5.1 Vue3和Vue2的区别
+双向绑定方法不同
+	Vue2：Object.defineProperty()  	后添加的属性是劫持不到的
+	Vue3：new Proxy()  			即使后添加的也可以劫持到，还不需要循环。Vue3中没有$set，new Proxy不需要
+	Vue2中组件只能有一个根节点， Vue3引入了Fragment，允许组件有多个根节点
+Vue2使用选项式API，Vue3使用组合式API，代码更整洁
+提供了Suspense组件，用于处理异步组件的加载状态
+Teleport组件允许将子组件渲染到DOM中的任何位置
+更好的TypeScript支持
+使用了更小的包体积和更高效的运行时性能
+
+5.2 Vue3中响应式系统的实现方式与Vue2有什么不同？
+Vue3使用基于Proxy的响应式系统，取代了Vue2中基于Object.defineProperty的响应式实现。Proxy可以拦截和监控对对象属性的访问和修改，因此它能够处理Vue2无法高效处理的一些场景，如数组的直接修改、对嵌套对象的深层次监听等。
+
+5.3 Vue3的生命周期钩子有哪些变化？
+Vue3继续支持Vue2的生命周期钩子，但将beforeDestroy和destroyed改名为beforeUnmount和unmounted。
+在组合式API中，生命周期钩子被函数化，可以在setup()函数中使用。
+对应关系：
+beforeCreate→setup()
+created→setup()
+beforeMount→onBeforeMount
+mounted→onMounted
+beforeUpdate→onBeforeUpdate
+updated→onUpdated
+beforeDestroy→onBeforeUnmount
+destroyed→onUnmounted
+
+5.4 Composition API的新特性是什么？
+Composition API主要包含了 ref, reactive, setup, computed，watch等新的函数和特性。
+
+5.5 Composition API如何使用响应式数据？
+可以通过reactive或ref函数来创建响应式数据，reactive适用于对象，ref适用于基本类型和单一值。
+
+5.6 Composition API如何实现props的响应式？
+使用defineProps函数来定义响应式的props
+
+5.7 Vue3中的Teleport是什么？
+Teleport允许你将组件内容渲染到DOM树的不同位置，而不是按照组件中的位置进行渲染。适用于需要在页面其他位置显示的元素，如弹窗、通知、模态框等。使用 Teleport 可以避免 z-index 问题和其他布局问题
+
+5.8 Vue3中的Fragment是什么？
+Fragment允许组件有多个根节点。在Vue2中组件只能有一个根节点， Vue3中组件可以有多个根节点
+
+5.9 Vue3中Suspense是什么？
+用于处理异步组件的加载过程。通过在Suspense组件中包裹异步组件，并提供一个fallback选项，可以在异步组件加载过程中展示一个占位符或加载指示器，直到异步组件加载完成并成功渲染，给用户提供一个良好的体验，避免空白或卡顿的视觉效果。
+
+5.10 Vue3中的watch和watchEffect有何不同？
+watch和watchEffect都是用于监视数据变化的 API。不同之处在于watchEffect在初始化时会立即执行一次回调函数，而watch会在初始化时不会执行回调函数，只有在监视的数据变化时才会执行回调函数。watch需要指定要监听哪些数据，watchEffect会自动检测在回调函数中使用了哪些响应式数据，并自动追踪它们的变化，无需手动指定
+
+5.11 Vue3中的provide和inject是什么？
+provide和inject是一对用于组件间传递数据的 API，适用于在组件树中跨层级传递数据而不通过props进行繁琐的传递。
