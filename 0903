@@ -43,7 +43,6 @@ css不能正常加载时，仍然能够保证基本的文档结构
 1.6 常见布局方式
 固定布局、自适应布局、响应式布局、弹性布局、流式布局
 
- 
 1.7 三栏布局方式两边固定中间自适应怎么实现
 margin 负值法：两边固定宽度的元素使用 float 浮动，中间元素设置 width: 100%，通过左右栏的负 margin 值让中间元素自适应剩余空间。
 自身浮动法：左栏左浮动，右栏右浮动，中间栏放在最后，不设置浮动属性，它会自动填充剩余空间。
@@ -87,7 +86,6 @@ IE盒子模型:margin、content(border + padding + content)		box-sizing: border-
 2.3 CSS 选择器有优先级
 !important > 内联样式(行间样式) > id选择器 > 类选择器 > 标签选择器 > 通配(*)
 
- 
 2.4 实现元素的垂直居中
 定位+transform		position: absolute;left: 50%;top: 50%;transform: translate(-50%， -50%);
 定位+margin		position: absolute;left: 0;right: 0;top: 0;bottom: 0;margin: auto;
@@ -136,7 +134,7 @@ Object.prototype.toString.call()
 使用场景：防抖，节流，函数嵌套函数避免全局污染的时候
 解决办法：把调用内部函数对象的变量设置为null
 function fn(a){return function(){console.log(a)}}	var fo = fn('abcd')	fo()
- 
+
 3.3内存泄漏
 内存泄露是指网页或应用程序由于某些原因未能及时释放不再需要的内存，从而导致内存使用不断增加，影响性能和用户体验。
 常见原因：
@@ -226,7 +224,7 @@ class是ES6引入的语法糖，用于简化类的定义和继承，让我们可
 3.22 延迟JS加载的方式
 <script defer src="script.js"></script>
 <script async src="script.js"></script>
- 
+
 4. VUE
 4.1 MVVM和MVC
 MVC
@@ -313,7 +311,7 @@ Vuex里的数据是保存在运行内存中的,当页面刷新时,页面会重�
 
 4.16 什么是虚拟DOM
 虚拟DOM就是一个在内存里的轻量版DOM。当我们更新UI时，框架会先在这个虚拟DOM上进行操作，然后只把必要的变化应用到真实DOM上。这种方式可以让页面更新更快，性能更好。
- 
+
 5. VUE 3
 5.1 Vue3和Vue2的区别
 双向绑定方法不同
