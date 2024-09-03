@@ -121,7 +121,7 @@ display:none;(不占位)	 visibility:hidden; (占位) 	opacity: 0; (占位)  pos
 基本类型：String、Number、Boolean、Undefined、Null、Symbol
 引用类型：Object、Function、Array
 判断方式：
-typeof()	对于基本数据类型没问题，遇到引用数据类型就不管用	console.log(typeof [1，2，3] )//object
+typeof()	对于基本数据类型没问题，遇到引用数据类型就不管用	console.log(typeof [1, 2, 3] )//object
 instanceof()	只能判断引用数据类型，不能判断基本数据类型	console.log('abc'instanceof String)//false
 constructor 	几乎可以判断基本数据类型和引用数据类型	 	console.log(('abc').constructor=== String)//object
 Object.prototype.toString.call()
@@ -150,11 +150,11 @@ function fn(a){ return function(){console.log(a)} }	var fo = fn('abcd')	fo()
 3.6 数组去重方法
 使用 Set：const uniqueArray = [...new Set(array)];
 使用 Array.from 与 Set：const uniqueArray = Array.from(new Set(array));
-使用 filter 和 indexOf：const uniqueArray = array.filter((item， index) => array.indexOf(item) === index);	
+使用 filter 和 indexOf：const uniqueArray = array.filter((item, index) => array.indexOf(item) === index);	
 
 3.7 对象合并方法
-const merged = Object.assign({}， obj1， obj2);
-使用扩展运算符：const merged = { ...obj1， ...obj2 };
+const merged = Object.assign({}, obj1, obj2);
+使用扩展运算符：const merged = { ...obj1, ...obj2 };
 
 3.8 var、let、const
 var声明的变量不存在块级作用域，在全局范围内都有效，let、const声明的变量有块级作用域，只在它所在的代码块有效
@@ -287,7 +287,7 @@ vm.arr.splice(index, 1, newValue)
 vm.$set(vm.arr, index, newValue)
 Vue.set(vm.arr, index, newValue)
 
-4.12 computed，watch，methods
+4.12 computed、watch、methods
 computed：计算属性，可以监听某些数据的变化，并且有缓存。只有监听的数据发生变化才会重新进行计算。如果一进入页面调用，就会触发
 methods：可以放入函数，没有缓存。如果一进入页面调用，就会触发
 watch：监听属性，当数据发生改变时，才会触发。可以得到现在的值和过去的值
@@ -330,14 +330,14 @@ Vue3使用基于Proxy的响应式系统，取代了Vue2中基于Object.definePro
 Vue3继续支持Vue2的生命周期钩子，但将beforeDestroy和destroyed改名为beforeUnmount和unmounted。
 在组合式API中，生命周期钩子被函数化，可以在setup()函数中使用。
 对应关系：
-beforeCreate→setup()
-created→setup()
-beforeMount→onBeforeMount
-mounted→onMounted
-beforeUpdate→onBeforeUpdate
-updated→onUpdated
-beforeDestroy→onBeforeUnmount
-destroyed→onUnmounted
+beforeCreate -> setup()
+created -> setup()
+beforeMount -> onBeforeMount
+mounted -> onMounted
+beforeUpdate -> onBeforeUpdate
+updated -> onUpdated
+beforeDestroy -> onBeforeUnmount
+destroyed -> onUnmounted
 
 5.4 Composition API的新特性是什么？
 Composition API主要包含了ref，reactive，setup，computed，watch等新的函数和特性。
