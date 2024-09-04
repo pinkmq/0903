@@ -73,14 +73,14 @@
 #### 2.6 清除浮动有哪些方式(浮动塌陷)
 - 元素浮动以后，脱离正常文档流，导致父元素无法被撑开(高度易陷)，且会影响后续正常布局。
 - 清浮动方法：
-  - 给浮动元素的父元素添加一个伪元素	.clearfix::after { content: ''; clear: both; display: table; }
+  - 给浮动元素的父元素添加一个伪元素	`.clearfix::after { content: ''; clear: both; display: table; }`
   - 触发BFC
   - 给浮动标签的父标签固定高度(不够灵活)
 
 #### 2.7 margin塌陷
 - 在两个盒子嵌套的时候，父盒子和子盒子同时设置margin的时候会出现实际的magin取的是两个margin的最大值。
 - 解决方法：
-  - 给父元素添加一个伪元素	.clearfix::after { content: ''; clear: both; display: table; }
+  - 给父元素添加一个伪元素	`.clearfix::after { content: ''; clear: both; display: table; }`
   - 触发BFC
   - 给父级设置边框或内边距
 
