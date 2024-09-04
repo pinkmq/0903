@@ -44,15 +44,14 @@
 - href不会直接下载资源，而是创建一个通道，当用户点击链接时，浏览器会导航到指定的URL
 - src浏览器会下载资源并将其嵌入到当前文档中，替代当前元素
 
-
 ### 2. CSS
 #### 2.1 盒子模型
 - 标准盒子模型：margin、border、padding、content `box-sizing: content-box;`
 - IE盒子模型：margin、content( border + padding + content ) `box-sizing: border-box;`
 
 #### 2.2 重绘和重排(回流)
-- 重绘：对元素的样式进行修改，比如color和background-color，浏览器不需要重新计算几何属性，直接绘制该元素的新样式，那么就只触发了重绘。
-- 重排：当一个元素自身的宽高、位置、显隐或元素内部的文字结构发生变化，导致需要重新构建页面，这个过程就是重排(也叫回流)。产生回流一定会造成重绘，但是重绘不一定会造成回流。
+- 重绘：对元素的样式进行修改，比如color和background-color，浏览器不需要重新计算几何属性，直接绘制该元素的新样式，那么就只触发了重绘
+- 重排：当一个元素自身的宽高、位置、显隐或元素内部的文字结构发生变化，导致需要重新构建页面，这个过程就是重排(也叫回流)。产生回流一定会造成重绘，但是重绘不一定会造成回流
 
 #### 2.3 CSS选择器优先级
 - !important > 内联样式(行间样式) > id选择器 > 类选择器 > 标签选择器 > 通配( * )
@@ -63,7 +62,7 @@
 - flex布局  `display: flex; align-items: center; justify-content: center;`
 
 #### 2.5 什么是BFC
-- BFC也就是块格式化上下文，是一个独立的容器，容器里的子元素不会影响到外面的元素。
+- BFC也就是块格式化上下文，是一个独立的容器，容器里的子元素不会影响到外面的元素
 - 触发BFC：
   - float属性为left、right
   - position属性为absolute、fixed
@@ -71,14 +70,14 @@
   - overflow属性为hidden、auto、scroll
 
 #### 2.6 清除浮动有哪些方式(浮动塌陷)
-- 元素浮动以后，脱离正常文档流，导致父元素无法被撑开(高度易陷)，且会影响后续正常布局。
+- 元素浮动以后，脱离正常文档流，导致父元素无法被撑开(高度易陷)，且会影响后续正常布局
 - 清浮动方法：
   - 给浮动元素的父元素添加一个伪元素	`.clearfix::after { content: ''; clear: both; display: table; }`
   - 触发BFC
   - 给浮动标签的父标签固定高度(不够灵活)
 
 #### 2.7 margin塌陷
-- 在两个盒子嵌套的时候，父盒子和子盒子同时设置margin的时候会出现实际的magin取的是两个margin的最大值。
+- 在两个盒子嵌套的时候，父盒子和子盒子同时设置margin的时候会出现实际的magin取的是两个margin的最大值
 - 解决方法：
   - 给父元素添加一个伪元素	`.clearfix::after { content: ''; clear: both; display: table; }`
   - 触发BFC
@@ -92,10 +91,10 @@
 - 基本类型：String、Number、Boolean、Undefined、Null、Symbol
 - 引用类型：Object、Function、Array
 - 判断方式：
-  - typeof()	对于基本数据类型没问题，遇到引用数据类型就不管用  `console.log(typeof [1, 2, 3] )//object`
-  - instanceof()	只能判断引用数据类型，不能判断基本数据类型  `console.log('abc'instanceof String)//false`
-  - constructor 	几乎可以判断基本数据类型和引用数据类型  `console.log(('abc').constructor=== String)//object`
-  - Object.prototype.toString.call()
+  - typeof()	只能判断基本数据  `console.log(typeof [1, 2, 3] ) // object`
+  - instanceof()	只能判断引用数据类型  `console.log('abc'instanceof String) // false`
+  - constructor `console.log(('abc').constructor=== String) // object`
+  - `console.log(Object.prototype.toString.call('Hello')); // [object String]`
 
 #### 3.2 闭包
 - 函数嵌套函数，内部函数被外部函数返回并保存下来时，就会产生闭包  `function fn(a){ return function(){console.log(a)} }	var fo = fn('abcd')	fo()`
@@ -104,7 +103,7 @@
 - 解决办法：把调用内部函数对象的变量设置为null
 
 #### 3.3 内存泄漏
-- 内存泄露是指程序由于某些原因未能及时释放不再需要的内存，导致内存使用不断增加，从而影响性能和用户体验。
+- 内存泄露是指程序由于某些原因未能及时释放不再需要的内存，导致内存使用不断增加，从而影响性能和用户体验
 - 常见原因：一些未清除的定时器；过度的闭包；一些未声明直接赋值的变量
 
 #### 3.4 什么是作用域，什么是作用域链？
@@ -192,30 +191,146 @@
 - `<script defer src="script.js"></script>`
 - `<script async src="script.js"></script>`
 
+### 4. VUE
+#### 4.1 MVVM和MVC
+- MVC
+  - Model：处理数据和逻辑
+  - View：显示数据，不负责逻辑
+  - Controller：处理用户输入，更新数据和视图
+- MVVM
+  - Model：处理数据和逻辑
+  - View：通过数据绑定与ViewModel互动
+  - ViewModel：管理数据和操作，但不直接操作DOM
+- 区别：
+  - MVC中使用Controller处理输入和更新，数据和视图的同步需要手动管理
+  - MVVM中使用ViewModel处理输入和数据更新，自动同步数据和视图。更适合动态更新的数据驱动应用
+
+#### 4.2 MVVM框架和jQuery框架有什么区别
+- MVVM：专注于处理数据的变化，比如添加、删除、更新数据，能自动把数据和网页上的内容同步起来，适合做复杂的单页应用（SPA）
+- jQuery：擅长操作网页上的元素，比如改变样式、动画效果等，需要手动去更新页面上的内容，适合做简单的页面交互和快速搭建原型
+
+#### 4.3 SPA单页面应用和传统页面跳转有什么区别？
+- 单页面应用：一个系统只加载一次资源，之后的操作交互、数据交互是通过路由、ajax来进行，页面并没有刷新
+- SPA跳转是一个页面进行切换，传统页面跳转就是跳转不同的html 
+- SPA对于SEO不是特别好，只能收录一个，传统的页面对于SEO比较好，多个html文件收录
+
+#### 4.4 Vue的双向绑定原理
+- 通过Object.defineProperty劫持数据发生的改变，如果数据发生改变了，触发update方法进行更新节点内容，从而实现了数据双向绑定。
+
+#### 4.5 Vue优缺点
+- Vue的两个核心系统：数据驱动、组件系统
+- 优点：MVVM、数据驱动、组件化、轻量、简洁、高效、快速、模块友好。
+- 缺点：1.不支持低版本的浏览器，最低只支持到IE9；2.不利于SEO优化；3.第一次加载首页耗时相对较长
+
+#### 4.6 Vue的生命周期
+- `beforeCreate、created、beforeMount、mounted、beforeUpdate、updated、beforeDestroy、destroyed`
+- 一旦进入到页面或组件，会执行`beforeCreate、created、beforeMount、mounted`
+- 父组件引入子组件，那么生命周期执行的顺序是`父：beforeCreate、created、beforeMount，子：beforeCreate、created、beforeMount、mount、mounteed，父：mounted`
+- 如果加入了keep-alive(缓存组件)会多两个生命周期`activated、deactivated`，第一次进入组件会执行`beforeCreate、created、beforeMount、mounted、activated`，第二次或第N次进入组件会执行`activated`
+
+#### 4.7 导航守卫有哪些
+- 全局守卫：`beforeEach、beforeResolve、afterEach`
+- 路由独享守卫：`beforeEnter`
+- 组件内守卫：`beforeRouteEnter、beforeRouteUpdate、beforeRouteLeave`
+ 
+#### 4.8 组件传值
+- 父传子：父组件通过`props`向子组件传递数据
+- 子传父：子组件通过`$emit`方法向父组件发送事件。子组件触发事件时，可以附带数据，父组件通过监听事件来获取数据
+- 组件之间：vuex、eventbus、本地存储
+
+#### 4.9 Vue-router的模式
+- hash模式：带 # ，hash虽然出现在URL中，但不会被包含在HTTP请求中，对后端完全没有影响，因此即使没有做到对路由的全覆盖，也不会返回404错误
+- history模式：一旦刷新的话，有可能会404，因为没有当前的真正路径，需要后端配合将不存在的路径重定向到入口文件
+
+#### 4.10 v-if和v-for的优先级
+- Vue2中：v-for的优先级比v-if高，Vue3中：v-if的优先级比v-for高
+- v-if和v-for不要写在同一个节点上，v-if要写在父节点上
+
+#### 4.11 Vue检测不到数组的改变怎么解决
+- `vm.arr.splice(index, 1, newValue)`
+- `vm.$set(vm.arr, index, newValue)`
+- `Vue.set(vm.arr, index, newValue)`
+
+#### 4.12 computed、watch、methods
+- computed：计算属性，可以监听某些数据的变化，并且有缓存。只有监听的数据发生变化才会重新进行计算。如果一进入页面调用，就会触发
+- methods：可以放入函数，没有缓存。如果一进入页面调用，就会触发
+- watch：监听属性，当数据发生改变时，才会触发。可以得到现在的值和过去的值
+
+#### 4.13 vue.$nextTick()
+- 当DOM更新完毕执行内部代码
+
+#### 4.14 props和data优先级
+- props > methods > data > computed > watch
+
+#### 4.15 Vuex
+- Vuex用来集中管理应用里的所有状态数据
+- State：是数据仓库，所有组件都能从这里取数据
+- Getters：是用来从数据仓库里提取和计算信息的工具
+- Mutations：是用来直接更改数据仓库内容的方法
+- Actions：是处理异步操作的地方，然后调用mutations来更新仓库里的数据
+- Modules：如果数据和方法太多，可以把它们分成几个小模块，每个模块自己管理自己的数据和方法，适合大型应用
+- 持久化存储：Vuex里的数据只保存在内存中，当页面刷新时，数据会丢失。为了保存数据，可以用localStorage、cookies，或使用vuex-persistedstate插件来解决这个问题
+
+#### 4.16 什么是虚拟DOM
+- 虚拟DOM就像是在内存中搞了一个虚拟的网页副本，当我们做一些页面更新时，框架会先在这个虚拟副本上进行更改，然后再把需要变化的应用到真正的网页上。这样做能让页面更新变得更快，更流畅。就像先在草稿纸上画图，再把有改动的地方放到正式图上
+
+### 5. VUE 3
+#### 5.1 Vue3和Vue2的区别
+- 双向绑定方法不同
+  - Vue2：`Object.defineProperty()` 后添加的属性是劫持不到的
+  - Vue3：`new Proxy()` 即使后添加的也可以劫持到，还不需要循环。Vue3中没有$set，new Proxy不需要
+- Vue2中组件只能有一个根节点，Vue3引入了Fragment，允许组件有多个根节点
+- Vue2使用选项式API，Vue3使用组合式API，代码更整洁
+- Teleport组件允许将子组件渲染到DOM中的任何位置
+- 更好的TypeScript支持
+- 使用了更小的包体积和更高效的运行时性能
+
+#### 5.2 Vue3中响应式系统的实现方式与Vue2有什么不同？
+- Proxy可以拦截和监控对对象属性的访问和修改，因此它能够处理Vue2无法高效处理的一些场景，如数组的直接修改、对嵌套对象的深层次监听等
+
+#### 5.3 Vue3的生命周期钩子有哪些变化？
+- Vue3继续支持Vue2的生命周期钩子，但将`beforeDestroy`和`destroyed`改名为`beforeUnmount`和`unmounted`
+- 在组合式API中，生命周期钩子被函数化，可以在setup()函数中使用
+- 对应关系：
+  - `beforeCreate -> setup()`
+  - `created -> setup()`
+  - `beforeMount -> onBeforeMount`
+  - `mounted -> onMounted`
+  - `beforeUpdate -> onBeforeUpdate`
+  - `updated -> onUpdated`
+  - `beforeDestroy -> onBeforeUnmount`
+  - `destroyed -> onUnmounted`
+
+#### 5.4 Composition API的新特性是什么？
+- Composition API主要包含了`ref，reactive，setup，computed，watch`等新的函数和特性。
+
+#### 5.5 Composition API如何使用响应式数据？
+- 可以通过reactive或ref函数来创建响应式数据，reactive适用于对象，ref适用于基本类型和单一值。
+
+#### 5.6 Composition API如何实现props的响应式？
+- 使用defineProps函数来定义响应式的props
+
+#### 5.7 Vue3中的Teleport是什么？
+- Teleport就像是一个传送门，可以把组件的内容从页面的一个地方移动到另一个地方显示。适合用来处理Modal、弹窗等，不用担心布局和层级问题
+
+#### 5.8 Vue3中的Fragment是什么？
+- Fragment允许组件有多个根节点。在Vue2中组件只能有一个根节点， Vue3中组件可以有多个根节点
+
+#### 5.9 Vue3中Suspense是什么？
+- Suspense就像是一个加载提示器，帮助你处理异步组件的加载过程。用它包裹异步组件时，可以设置一个占位符或加载动画，这样在等待组件加载完成时，用户看到的不会是空白的页面或卡顿，而是一个友好的提示，直到内容准备好
+
+#### 5.10 Vue3中的watch和watchEffect有何不同？
+- 都是用来监视数据变化的工具
+- 区别：
+  - watch：你得告诉它具体要监视哪些数据，只有这些数据变了，它才会执行回调函数。初始化的时候不会执行回调，只在数据变化时执行
+  - watchEffect：它会自动追踪回调函数中用到的所有响应式数据，并在这些数据变化时执行回调。初始化时会立即执行一次回调
+
+#### 5.11 Vue3中的provide和inject是什么？
+- provide和inject可以在组件树的不同层级之间轻松传递数据，不需要逐层通过props传递
+
 ### 6. 其他
 #### 6.1 一个完整的http请求都发生了些什么事情？
-```
-你决定要去咖啡店：
-想象你想去一家咖啡店（网站），你在手机上找到它的地址（网址）。
-
-你去咖啡店：
-你拿着地址，去到那家咖啡店（发出 HTTP 请求）。你告诉店员你想要一杯拿铁（请求某个网页或资源）。
-
-咖啡店接待你：
-店员（服务器）听到你的订单后，开始准备你的咖啡（处理请求），他们可能需要时间来完成你的订单。
-
-咖啡店给你咖啡：
-店员准备好你的咖啡后，给你一杯拿铁（HTTP 响应），上面可能还有个标签，告诉你这是拿铁（响应头），还有咖啡的热度和类型（状态码、内容类型等）。
-
-你享用咖啡：
-你拿到咖啡后，看看是不是你点的那种，满意的话就开始享用（浏览网页内容）。
-
-你离开咖啡店：
-一旦你喝完咖啡，你离开了咖啡店（关闭连接），这时店员也可以清理桌子，准备迎接下一个顾客。
-
-总结
-在这个过程中，你像是从浏览器发出一个请求（去咖啡店点单），服务器处理你的请求（咖啡店准备咖啡），然后把结果（咖啡）返回给你，最后你享受内容并离开（浏览器展示网页并关闭连接）。
-```
+- 整个过程就像你在浏览器中输入网站地址，浏览器发出请求到服务器，服务器处理请求并返回网页内容，最后浏览器展示网页给你。
 
 #### 6.2 TCP三次握手和TCP四次挥手
 ```
