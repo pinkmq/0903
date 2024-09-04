@@ -43,3 +43,20 @@
 #### 1.9 href和src的区别
 - href不会直接下载资源，而是创建一个通道，当用户点击链接时，浏览器会导航到指定的URL
 - src浏览器会下载资源并将其嵌入到当前文档中，替代当前元素
+
+### 2. CSS
+#### 2.1 盒子模型
+- 标准盒子模型：margin、border、padding、content `box-sizing: content-box;`
+- IE盒子模型：margin、content( border + padding + content ) `box-sizing: border-box;`
+
+#### 2.2 重绘和重排(回流)
+- 重绘：对元素的样式进行修改，比如color和background-color，浏览器不需要重新计算几何属性，直接绘制该元素的新样式，那么就只触发了重绘。
+- 重排：当一个元素自身的宽高、位置、显隐或元素内部的文字结构发生变化，导致需要重新构建页面，这个过程就是重排(也叫回流)。产生回流一定会造成重绘，但是重绘不一定会造成回流。
+
+#### 2.3 CSS选择器优先级
+- !important > 内联样式(行间样式) > id选择器 > 类选择器 > 标签选择器 > 通配(*)
+
+#### 2.4 实现元素的垂直居中
+- 定位 + transform  `position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);`
+- 定位 + margin `position: absolute; left: 0; right: 0; top: 0; bottom: 0; margin: auto;`
+- flex布局  `display: flex; align-items: center; justify-content: center;`
