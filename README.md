@@ -291,6 +291,22 @@
 #### 4.16 什么是虚拟DOM
 - 虚拟DOM就像是在内存中搞了一个虚拟的网页副本，当我们做一些页面更新时，框架会先在这个虚拟副本上进行更改，然后再把需要变化的应用到真正的网页上。这样做能让页面更新变得更快，更流畅。就像先在草稿纸上画图，再把有改动的地方放到正式图上
 
+#### 4.17 Vue跨域问题怎么处理
+- 在vue.config.js中配置代理
+  ```
+  module.exports = {
+    devServer: {
+      proxy: {
+        '/api': {
+          target: 'http://localhost:3000',  // 后端 API 的地址
+          changeOrigin: true,
+          pathRewrite: { '^/api': '' }  // 如果后端不需要 '/api' 前缀
+        }
+      }
+    }
+  };
+  ```
+
 ### 5. VUE 3
 #### 5.1 Vue3和Vue2的区别
 - 双向绑定方法不同
@@ -347,33 +363,37 @@
 
 ### 6. 小程序
 #### 6.1 小程序的生命周期函数有哪些？
-- onLaunch：当小程序初始化完成时触发，全局只触发一次
-- onShow：当小程序启动或从后台进入前台显示时触发
-- onHide：当小程序从前台进入后台时触发
-- onError：当小程序发生错误时触发
-- onPageNotFound：当页面不存在时触发
+- 应用生命周期
+  - onLaunch：当小程序初始化完成时触发，全局只触发一次
+  - onShow：当小程序启动或从后台进入前台显示时触发
+  - onHide：当小程序从前台进入后台时触发
+  - onError：当小程序发生错误时触发
+  - onPageNotFound：当页面不存在时触发
+- 页面生命周期
+  - onLoad：页面加载时触发
+  - onReady：页面初次渲染完成时触发
+  - onShow：页面显示时触发
+  - onHide：页面隐藏时触发
+  - onUnload：页面卸载时触发
+  - onPullDownRefresh：用户下拉刷新时触发
+  - onReachBottom：页面滚动到底部时触发
+  - onShareAppMessage：点击分享按钮时触发
 
-#### 6.2 小程序页面的生命周期函数有哪些？
-- onLoad：页面加载时触发
-- onReady：页面初次渲染完成时触发
-- onShow：页面显示时触发
-- onHide：页面隐藏时触发
-- onUnload：页面卸载时触发
-- onPullDownRefresh：用户下拉刷新时触发
-- onReachBottom：页面滚动到底部时触发
-- onShareAppMessage：点击分享按钮时触发
-
-#### 6.3 如何在小程序中实现页面跳转？
+#### 6.2 如何在小程序中实现页面跳转？
 - wx.navigateTo：保留当前页面，跳转到应用内的某个页面，但不能跳转到tabBar页面
 - wx.redirectTo：关闭当前页面，跳转到应用内的某个页面
 - wx.switchTab：跳转到 tabBar 页面，并关闭其他所有非tabBar页面
-- wx.navigateBack：关闭当前页面，返回上一页面或多级页面
+- wx.navigateBack：关闭当前页面，返回上一页面或多级页面，可通过`getCurrentPages()`获取当前页面栈 
 - wx.reLaunch：关闭所有页面，跳转到应用内的某个页面
 
-#### 6.4 如何处理小程序中的授权和用户登录？
+#### 6.3 如何处理小程序中的授权和用户登录？
 - 用户首次进入小程序时，小程序可以调用wx.getUserProfile获取用户信息，并展示授权弹窗
 - 用户同意授权后，小程序可以通过wx.login获取用户的登录凭证code
-- 然后通过后台接口将code换取用户的openId和session_key，并进行登录状态的维护
+- 然后通过后台接口将code换取用户的openid、unionid、session_key，并进行登录状态的维护
+
+#### 6.4 小程序的openid和unionid
+- openid：在不同小程序拥有不同的openid
+- unionid：在微信体系下的unionid是相同的
 
 #### 6.5 什么是小程序的自定义组件？如何定义和使用它们？
 - 定义组件：在*.js中定义逻辑、属性和方法；在*.json中配置组件；在*.wxml和*.wxss中设置结构和样式
@@ -383,9 +403,21 @@
 - 通过微信提供的wx.request方法来实现。这个方法支持发送GET或POST请求，并可以携带参数。在请求成功后，后台返回的数据可以通过success回调函数来处理。
 
 #### 6.7 小程序的页面间数据传递有哪些方式？
-- wx.navigateTo或wx.redirectTo方法的url参数传递，在目标页面中，通过onLoad函数的options参数获取传递的数据 `onLoad: function(options) { console.log(options.param); // 输出: value }`
-- 全局数据对象globalData `console.log(app.globalData.sharedData);` 或本地存储wx.setStorageSync和wx.getStorageSync来共享数据
-- 通过自定义事件和事件监听进行页面间通信
+- 绑定事件传参：`data-name="John"  console.log(e.currentTarget.dataset.name);`
+- 页面传参：`wx.navigateTo`问号传参，在目标页面通过onLoad函数的options参数获取传递的数据 `onLoad: function(options) { console.log(options.[key名]); }`
+- globalData：
+  ```
+  // 在当前页面中设置全局数据
+  const app = getApp();
+  app.globalData = {
+    name: 'John',
+  };
+  目标页面：
+  const app = getApp();
+  console.log(app.globalData.name); // 输出: John
+  ```
+- 本地存储：`wx.setStorageSync() wx.getStorageSync()`
+- 自定义事件
 
 #### 6.8 小程序的页面有哪些文件组成？各自的作用是什么？
 - .json：页面配置文件，用于配置页面的窗口表现、导航栏等。
@@ -405,43 +437,49 @@
 - 通过在页面的onShareAppMessage方法中进行配置。当用户点击右上角的“分享”按钮时，会触发该方法，开发者可以在此方法中返回自定义的分享内容，包括标题、路径和图片等。
 - 分享时，也可以在onShareAppMessage的回调中携带参数，从而实现个性化的分享链接。
 
-#### 6.12 小程序中如何实现数据的持久化？
+#### 6.12 如何实现小程序的下拉刷新？
+- 在页面`.json`配置中设置`enablePullDownRefresh: true;`
+- 在`Page`中定义`onPul1DownRefresh`钩子函数
+- 当处理完数据刷新后，`wx.stopPullDownRefresh`停止下拉刷新
+
+#### 6.13 小程序中如何实现数据的持久化？
 - 本地缓存 `wx.setStorageSync、wx.getStorageSync、wx.setStorage、wx.getStorage、wx.clearStorageSync、wx.clearStorage`
 
-#### 6.13 如何在小程序中实现一个自定义导航栏？
-- 首先在页面的json配置文件中将navigationStyle设置为custom，去除默认导航栏。
-- 在页面的wxml文件中自定义一个导航栏结构，通常会包含返回按钮、标题、右侧按钮等。
-- 使用wx.getSystemInfoSync获取设备的状态栏高度，根据不同设备调整导航栏的高度和位置。
-- 在wxss文件中定义导航栏的样式，使其与微信的导航栏样式保持一致。
+#### 6.14 如何在小程序中实现一个自定义导航栏？
+- 在app.json中的tabBar项添加`custom: true,`，同时其余tabBar相关配置也补充完整 
+- 在代码根目录下添加`custom-tab-bar`文件，编写tabBar代码  `custom-tab-bar/index.js custom-tab-bar/index.json custom-tab-bar/index.wxml custom-tab-bar/index.wxss`
 
-#### 6.14 小程序中的setData方法有什么作用？
+#### 6.15 小程序中的setData方法有什么作用？
 - setData方法用于更新页面的数据并触发视图的重新渲染。
 - 频繁调用setData可能会导致性能问题，应避免在短时间内多次调用。
 - setData只能更新已经在data中定义过的属性，未定义的属性需要先在data中声明。
 - 尽量只更新必要的数据，避免过多的无关数据引起不必要的渲染。
 
-#### 6.15 什么是小程序的WXS？它与JS有何不同？
+#### 6.16 什么是小程序的WXS？它与JS有何不同？
 - WXS（WeiXin Script）是小程序中用于编写逻辑的一种脚本语言，具有更高的执行性能和独立的运行环境。
 - 区别：
   - WXS不能操作DOM和BOM。
   - WXS文件是单独编译的，不能与页面的js文件共享数据。
   - WXS的执行环境与页面的JavaScript执行环境不同，它没有页面的上下文。
 
-#### 6.16 小程序如何处理页面的滚动事件？
+#### 6.17 小程序如何处理页面的滚动事件？
 - 使用bindscroll绑定事件处理函数。可以在wxml文件中绑定scroll事件，例如`<scroll-view bindscroll="onScroll" />` 在js文件中，定义onScroll函数来处理滚动事件，如获取滚动位置、处理加载更多等。
 
-#### 6.17 如何在小程序中实现分页加载？
+#### 6.18 如何在小程序中实现分页加载？
 - 使用wx.request发送请求，获取当前页的数据。
 - 在请求成功后，将数据追加到已有数据中。
 - 记录当前页码，当用户触发加载更多事件时（如滚到底部），更新页码并发送请求获取下一页数据。
 - 需要注意处理加载状态、空数据等情况，避免重复加载。
 
-#### 6.18 小程序中的组件如何实现通讯？
+#### 6.19 小程序中的组件如何实现通讯？
 - 属性传递：父组件通过properties向子组件传递数据。
 - 事件传递：子组件通过this.triggerEvent触发自定义事件，父组件通过事件绑定处理。
 - 使用this.selectComponent：在父组件中通过this.selectComponent获取子组件实例，调用子组件的方法。
 
-#### 6.19 小程序中如何实现用户权限管理？
+#### 6.20 小程序中如何实现用户权限管理？
 - 使用wx.getSetting获取用户的授权状态。
 - 使用wx.authorize请求用户授权特定权限。
 - 根据用户授权状态，控制应用的功能访问，例如相册、位置、通讯录等。
+
+#### 6.21 bindtap和catchtap的区别是什么
+- 都是点击事件函数，bindtap不会组织冒泡，catchtap阻止冒泡
