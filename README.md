@@ -383,7 +383,7 @@
 - wx.navigateTo：保留当前页面，跳转到应用内的某个页面，但不能跳转到tabBar页面
 - wx.redirectTo：关闭当前页面，跳转到应用内的某个页面
 - wx.switchTab：跳转到 tabBar 页面，并关闭其他所有非tabBar页面
-- wx.navigateBack：关闭当前页面，返回上一页面或多级页面，可通过`getCurrentPages()`获取当前页面栈 
+- wx.navigateBack：关闭当前页面，返回上一页面或多级页面，可通过`getCurrentPages()`获取当前页面栈
 - wx.reLaunch：关闭所有页面，跳转到应用内的某个页面
 
 #### 6.3 如何处理小程序中的授权和用户登录？
